@@ -1,0 +1,15 @@
+Below are the classification metrics for the trained model. Number of epochs = 100.
+ Training Accuracy: 0.998 
+ Testing accuracy: 0.524 
+ 
+               precision    recall  f1-score   support
+
+      action       0.48      0.69      0.57       266
+     romance       0.45      0.14      0.22       242
+      horror       0.39      0.46      0.42       236
+      comedy       0.93      0.62      0.75       264
+       drama       0.49      0.68      0.57       242
+
+    accuracy                           0.52      1250
+   macro avg       0.55      0.52      0.50      1250
+weighted avg       0.55      0.52      0.51      1250
