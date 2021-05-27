@@ -96,7 +96,7 @@ Figure 2: Model history <br> <br>
 
 The conclusions made based on the training and loss curves are likewise supported by the plot below (see figure 3). Here it becomes perhaps even more clear that the model is overfitting the training data, reaching almost 100% accuracy for all movie genres.
 
-<img src="https://github.com/sofieditmer/self-assigned-lang/blob/main/output/cnn_300d_20epochs_plot_training_test_accuracies.png" width="500">
+<img src="https://github.com/sofieditmer/self-assigned-lang/blob/main/output/cnn_300d_20epochs_plot_training_test_accuracies.png" width="1000">
 Figure 3: Training and testing accuracies <br> <br>
 
 ### License <br>
