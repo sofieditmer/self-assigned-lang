@@ -1,108 +1,106 @@
-# Self-Assigned Portfolio: Retraining ResNet50 to Classify the American Sign Language (ASL) Alphabet
+# Self-Assigned Portfolio: Classifying Movie Genre Based on Plot Description Using a CNN Model and Pretrained GloVe Word Embeddings
 
-### Description of Task: Retraining the pretrained ResNet50 model to classifiying sign language letters <br>
-This project was the self-assigned portfolio assignment. For this project I chose to work with the American Sign Language (ASL) corpus available on [Kaggle](https://www.kaggle.com/grassknoted/asl-alphabet). This dataset consists of a collection of 87,000 images separated in 26 classes each corresponding to a single letter in the English alphabet depicted in sign language. For this self-assigned project, I aspired to demonstrate the use of deep learning in classifying sign language letters. In other words, I wanted to use a pretrained CNN model as a feature extractor and retrain it on a new classification task involving sign language letters. I chose to use the ResNet50 model as the pretrained model to work as a feature extractor and fine-tune its parameters to use in a new network. The ResNet50 model is a CNN with 50 layers, and the pretrained version of the network has been trained on more than a million images from the ImageNet database, which is a collection of more than 14 million images and around 20,000 categories. <br>
-My project consisted in producing two main python scripts. The first script prepares the ASL data, retrains the pretrained ResNet50 model on the data, evaluates its performance, and saves the model as a json-file and its weights to the output directory.
-The second script is then able to load the saved model and use it to classify an unseen image of a letter depicted in sign language. This script also visualizes the feature map of the final convolutional layer of the network, to enable the user to get an insight into exactly which parts of the original image that the model is paying attention to when classifying a letter in sign language. <br>
-This is a task with several apparent cultural relevancies given that the ASL serves as the main form of communication of deaf communities in the anglophone communities, and progress within the field of deep learning for sign language recognition is undoubtedly going to entail major advancement in alleviating some of the difficulties faced by the deaf community. <br>
+### Description of Task: Classifying Genre Based on Plot Descriotion <br>
+For this assignment I chose to work with movie plot descriptions scraped from Wikipedia; a dataset available on [Kaggle](https://www.kaggle.com/jrobischon/wikipedia-movie-plots ). This dataset contains information about nearly 35,000 movies. I wanted to see whether it would be possible to predict the genre of a movie based on its plot description using pre-trained GloVe word embeddings. In other words, I wanted to see how accurately the relationship between plot and genre can be modelled using pretrained word embeddings. <br>
 
 ### Content and Repository Structure <br>
-If the user wishes to engage with the code and reproduce the obtained results, this section includes the necessary instructions to do so. It is important to remark that all the code that has been produced has only been tested in Linux and MacOS. Hence, for the sake of convenience, I recommend using a similar environment to avoid potential problems. 
-The repository follows the overall structure below. The two python scripts, ```cnn-asl.py``` and ```use-model.py```, are located in the src folder. The outputs produced when running the scripts can be found within the output folder. The data folder contains a subset of the full dataset. If the user wishes to obtain the full dataset it is available on [Kaggle](https://www.kaggle.com/grassknoted/asl-alphabet). To obtain the full dataset, I suggest downloading it from Kaggle and uploading it to the data folder as a zip-file and then unzipping it via the command line. Alternatively, I recommend setting up the Kaggle command-line which is explained in this [article](https://necromuralist.github.io/kaggle-competitions/posts/set-up-the-kaggle-command-line-command/).
+If the user wishes to engage with the code and reproduce the obtained results, this section includes the necessary instructions to do so. It is important to remark that all the code that has been produced has only been tested in Linux and MacOS. Hence, for the sake of convenience, I recommend using a similar environment to avoid potential problems. <br>
+The repository follows the overall structure presented below. The two scripts, ```0-preprocessing.py``` and ```1-cnn-moviegenre.py```, are located in the ```src``` folder. The full dataset is provided in the ```data``` folder, and the outputs produced when running the scripts can be found within the ```output```folder. The ```utils``` folder stores a utility script with utility functions for creating the embedding matrix and plotting the loss/accuracy history of the model, and these are called in the main script. The README file contains a detailed run-through of how to engage with the code and reproduce the contents.
 
 | Folder | Description|
 |--------|:-----------|
 | ```data``` | A folder containing a subset of the full dataset as well as a folder called unseen_images which contains example images that can be used as input for the use-model.py script. 
 | ```src``` | A folder containing the python scripts for the particular assignment.
 | ```output``` | A folder containing the outputs produced when running the python scripts within the src folder.
+| ```utils``` | A folder containing utilty functions to be used in the main scripts.
 | ```requirements.txt```| A file containing the dependencies necessary to run the python script.
 | ```create_venv.sh```| A bash-file that creates a virtual environment in which the necessary dependencies listed in the ```requirements.txt``` are installed. This script should be run from the command line.
 | ```LICENSE``` | A file declaring the license type of the repository.
 
 ### Usage and Technicalities <br>
-If the user wishes to engage with the code and reproduce the obtained results, this section includes the necessary instructions to do so. First, the user will have to create their own version of the repository by cloning it from GitHub. This is done by executing the following from the command line: 
+To reproduce the results of this assignment, the user will have to create their own version of the repository by cloning it from GitHub. This is done by executing the following from the command line: 
 
 ```
-$ git clone https://github.com/sofieditmer/self-assigned.git
+$ git clone https://github.com/sofieditmer/self-assigned-lang.git  
 ```
 
-Once the user has cloned the repository, a virtual environment must be set up in which the relevant dependencies can be installed. To set up the virtual environment and install the relevant dependencies, a bash-script is provided, which automatically creates and installs the dependencies listed in the requirements.txt file when executed. To run the bash-script that sets up the virtual environment and installs the relevant dependencies, the user must execute the following from the command line. 
+Once the user has cloned the repository, a virtual environment must be set up in which the relevant dependencies can be installed. To set up the virtual environment and install the relevant dependencies, a bash-script is provided, which creates a virtual environment and installs the dependencies listed in the requirements.txt file when executed. To run the bash-script that sets up the virtual envi-ronment and installs the relevant dependencies, the user must first navigate to the topic modeling repository:
 
 ```
-$ cd self-assigned
+$ cd self-assigned-lang
 $ bash create_venv.sh 
 ```
 
-Once the virtual environment has been set up and the relevant dependencies listed in the ```requirements.txt``` have been installed within it, the user is now able to run the two scripts, ```cnn-asl.py``` and ```use-model.py```, provided in the src folder directly from the command line. The user has the option of specifying additional arguments, however, this is not required to run the script. In order to run the script, the user must first activate the virtual environment in which the script can be run. Activating the virtual environment is done as follows.
+Once the virtual environment has been set up and the relevant dependencies listed in ```requirements.txt``` have been installed within it, the user is now able to run the scripts provided in the ```src``` folder directly from the command line. In order to run the script, the user must first activate the virtual environment in which the script can be run. Activating the virtual environment is done as follows:
 
 ```
-$ source asl_cnn_venv/bin/activate
+$ source movie_venv/bin/activate
 ```
 
-Once the virtual environment has been activated, the user is now able to run the two scripts, ```cnn-asl.py``` and ```use-model.py```
+Once the virtual environment has been activated, the user is now able to run the scripts script within it:
 
 ```
-(asl_cnn_venv) $ python cd src
+(movie_venv) $ cd src
 
-(asl_cnn_venv) $ python cnn-asl.py
+(movie_venv) $ python 0-preprocessing.py
 
-(asl_cnn_venv) $ python use-model.py
+(movie_venv) $ python 1-cnn-moviegenre.py
 ```
 
-For the ```cnn-asl.py``` script, the user is able to modify the following parameters, however, as mentioned this is not compulsory:
+For the ```0-preprocessing.py``` script the user is able to modify the following parameters, however, this is not compulsory:
 
 ```
--t, --train_data: str <name-of-training-data>, default = "asl_alphabet_train_subset"
--te, --test_data: str <name-of-test-data>, default = "asl_alphabet_test_subset"
--a, --augment_data: str <perform-data-augmentation-true-false>, default = "False"
--b, --batch_size: int <size-of-batches>, default = 32
--n, --n_epochs: int <number-of-epochs>, default = 15
--o, --output_filename: str <name-of-classification-report>, default = "classification_report.txt"
+-i, --input_data: str <name-of-input-data>, default = "wiki_movie_plots.csv"
+-o, --output_filename: str <name-of-output-file>, default = "clean_movie_data.csv"
 ```
 
-For the ```use-model.py``` script the user is able to modify the following parameters, but once again, this is not necessary:
+For the ```1-cnn-moviegenre.py``` script the user is able to modify the following parameters, however, once again this is not compulsory:
 
 ```
--m, --model_name: str <name-of-model-to-load>, default = "saved_model.json"
--t, --train_data: str <name-of-train-data>, default = "asl_alphabet_train_subset"
--u, --unseen_image: str <name-of-input-image>, default = "unseen_img_test1.png"
+-i, --input_data: str <name-of-input-data>, default = "clean_movie_data.csv"
+-ts, --test_size: float <size-of-test-split>, default = 0.25
+-n, --n_words: int <size-of-vocabulary>, default = 5000
+-nd, --n_dimensions: int <number-of-embedding-dimensions>, default = 100
+-e, --n_epochs: int <number-of-training-epochs>, default = 10
+-b, --batch_size: int <size-of-batches>, default = 20
+-r, --regularization_value: float <regularization-value>, default = 0.0001
+-te, --train_embeddings: str <train-embeddings-true-or-false>, default = “False”
 ````
 
-The abovementioned parameters allow the user to adjust the pipeline, if necessary, but because default parameters have been set, it makes the script run without explicitly specifying these arguments.  
+The abovementioned parameters allow the user to adjust the pipeline, but default parameters have been set making the script run without explicitly specifying these arguments.The user is able to modify the size of the test-split, the number of words in the vocabulary, the dimensions of the pretrained word embeddings, the number of training epochs, the batch size (the larger the batch size the more efficient processing), the regularization value, and whether to train the embeddings or not. 
+
 
 ### Output <br>
-When running the ```cnn-asl.py```script, the following files will be saved in the ```output``` folder: 
-1. ```model_summary.txt``` Summary of the model architecture.
-2. ```model_architecture.png``` Visual representation of the model architecture.
-3. ```model_loss_accuracy_history.png``` Plot showing the loss and accuracy learning curves of the model during training.
-4. ```classification_report.txt``` Classification metrics of the model performance.
-5. ```saved_model.json``` The model saved as a JSON-file.
-6. ```model_weights.h5``` The model weights saved in the HDF5 format. ¨
+When running the ```0-preprocessing.py```script, the following files will be saved in the ```data``` folder: 
+1.  ```clean_movie_data.csv``` Preprocessed data. 
 
-When running the ```use-model.py```script, the following files will be saved in the ```output``` folder: 
-1. ```unseen_image_superimposed_heatmap.png``` Superimposed heatmap on unseen image.
-2. ```unseen_image_prediction.txt``` Model prediction of unseen image.
+When running the ```1.cnn-moviegenre.py```script, the following files will be saved in the ```output``` folder: 
+1. ```cnn_100d_summary.txt``` Summary of the model architecture.
+2. ```cnn_100d_architecture.png``` Summary of the model architecture.
+3. ```cnn_100d_15epochs_classification_metrics.txt``` Classification report.
+4. ```cnn_100d_15epochs_loss_accuracy_history.png``` Loss/accuracy curves.
+5. ```cnn_100d_15epochs_plot_training_test_accuracies.png``` Training and validation accuracies.
+
 
 ### Discussion of Results <br>
-The retrained ResNet50 achieved a weighted average accuracy score of 4% on the ASL alphabet [see Classification Report](https://github.com/sofieditmer/self-assigned/blob/main/output/classification_report.txt). This is surprisingly low considering that a very deep, pretrained, convolution neural network model was used.
-When assessing the loss/accuracy plot of the model, there are clear signs of underfit learning curves, suggesting that the model is not able to sufficiently learn from the dataset (see Figure 1). In particular this is indicated by the relatively high loss for both the training and validation data, as well as the fact that the loss curves remain relatively flat regardless of training. The slight gap between the training and validation loss indicate that the model is learning slightly from the training data, given that the training loss decreases more compared to the validation loss.  Furthermore, the training and validation accuracy curves remain low regardless of training, and do not increase at any point, once again suggesting that the model struggles with learning from the data. 
-Taken together, the classification report as well as the learning curves of the model seem to suggest that the model is underfitting the data. One reason for this might be that the amount of data is simply not sufficient for the model to learn. Another reason might be the model specifications. Modifying the model parameters would potentially improve the performance. Making the model less restrictive might potentially enable it to learn more from the data. Grid search might be a potential solution to optimizing the model hyperparameters. 
+Three different CNN models were trained. These models differed in the number of epochs and word embedding dimensions. The weighted average accuracy scores of the models were very similar. This section covers the results obtained by the CNN model trained for 20 epochs using pretrained GloVe word embeddings with 300 dimensions (see figure 1). Results for all models are available in the [output folder](https://github.com/sofieditmer/self-assigned-lang/tree/main/output)
+ 
+<img src="https://github.com/sofieditmer/self-assigned-lang/blob/main/output/cnn_300d_architecture.png" width="500">
+Figure 1: Summary of CNN model architecture. <br> <br>
 
-<img src="https://github.com/sofieditmer/self-assigned/blob/main/output/model_loss_accuracy_history.png" width="500">
-Figure 1: Loss/accuracy learning curves of the model. <br>
+This model obtained a weighted average accuracy score of 55% (see [Classification Report](https://github.com/sofieditmer/self-assigned-lang/blob/main/output/cnn_300d_20epochs_classification_metrics.txt)). The model achieved the highest F1-score for the horror genre, suggesting that movie plot descriptions of horror movies contain clear indicators of genre as opposed to comedy movie descriptions for which the model obtained a F1-score of only 29%. Thus, the question of whether movie plot description is a good predictor of genre seems to vary depending on the movie description in question. Overall, the model performs reasonably well. <br>
+When assessing the accuracy and loss curves of the model for both the training and validation data, it seems that the model suffers from overfitting (see figure 2). In particular, this is indicated by the loss curves. While the training loss decreases, the validation loss increases substantially, suggesting that the model is overfitting the training data and having a hard time generalizing to the validation data. The training accuracy increases relatively quickly and reaches 100% accuracy already after 7 epochs, which also suggests overfitting. The validation accuracy increases but reaches a plateau of 50% after 5 epochs. 
 
-<br> Another aspect of the project was the visualization of the feature map of the last convolutional layer of the network. This method was implemented in order to provide the user with an insight into how the model is working “qualitatively”. In other words, visualizing the feature map of the last convolutional layer of the network enables the user to see exactly which parts of the original image the model is paying attention to when making its predictions. The activation heatmaps superimposed on 4 test images are shown below (see Figure 2). In all four instances, it becomes evident that the model is paying attention to the center of the image, suggesting that the most informative features are located here. However, it is important to remark that the weighted average accuracy obtained by the model was only 4%, suggesting that these activation heatmaps might not be very enlightening. 
+<img src="https://github.com/sofieditmer/self-assigned-lang/blob/main/output/cnn_300d_20epochs_loss_accuracy_history.png" width="500">
+Figure 2: Model history <br> <br>
 
-<p float="left">
-  <img src="https://github.com/sofieditmer/self-assigned/blob/main/output/unseen_img_test1_superimposed_heatmap.png" width="200" height = "200" />
-  <img src="https://github.com/sofieditmer/self-assigned/blob/main/output/unseen_img_test2_superimposed_heatmap.png" width="200" height = "200" /> 
-  <img src="https://github.com/sofieditmer/self-assigned/blob/main/output/unseen_img_test3_superimposed_heatmap.png" width="200" height = "200" />
-  <img src="https://github.com/sofieditmer/self-assigned/blob/main/output/unseen_img_test4_superimposed_heatmap.png" width="200" height = "200" />
-</p> 
-Figure 2: Superimposed activation heatmaps on unseen images. <br>
+The conclusions made based on the training and loss curves are likewise supported by the plot below (see figure 3). Here it becomes perhaps even more clear that the model is overfitting the training data, reaching almost 100% accuracy for all movie genres.
+
+<img src="https://github.com/sofieditmer/self-assigned-lang/blob/main/output/cnn_300d_20epochs_plot_training_test_accuracies.png" width="500">
+Figure 3: Training and testing accuracies <br> <br>
 
 ### License <br>
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/sofieditmer/self-assigned/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/sofieditmer/self-assigned-lang/blob/main/LICENSE) file for details.
 
 ### Contact Details <br>
 If you have any questions feel free to contact me on [201805308@post.au.dk](201805308@post.au.dk)
