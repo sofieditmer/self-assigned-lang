@@ -1,0 +1,1 @@
+# In this folder you need to place the pretrained GloVe word embeddings. See README for more information on how to download these.
