@@ -28,10 +28,10 @@ $ git clone https://github.com/sofieditmer/self-assigned-lang.git
 Since the pretrained GloVe word embeddings are too large to upload to GitHub the user is asked to download these through the command line, move them to the glove folder provided in the repository and unzip the file. This is because the 1-cnn-moviegenre.py scripts expects the pretrained GloVe word embeddings to be placed in a folder called “glove”. 
 
 ```
-$ cd self-assigned-lang                           # navigate to repository
-$ wget http://nlp.stanford.edu/data/glove.6B.zip  # download word embeddings
-$ mv glove.6b.zip glove                           # move embeddings to glove/ folder
-$ unzip glove.6B.zip                              # unzip the file
+$ cd self-assigned-lang                                # navigate to repository
+$ wget http://nlp.stanford.edu/data/glove.6B.zip       # download word embeddings
+$ mv glove.6b.zip glove                                # move embeddings to glove/ folder
+$ unzip glove.6B.zip                                   # unzip the file
 ```
 
 Once the user has cloned the repository and downloaded the pretrained word embeddings, a virtual environment must be set up in which the relevant dependencies can be installed. To set up the virtual environment and install the relevant dependencies, a bash-script is provided, which creates a virtual environment and installs the dependencies listed in the requirements.txt file when executed. To run the bash-script that sets up the virtual envi-ronment and installs the relevant dependencies, the user must first navigate to the topic modeling repository:
