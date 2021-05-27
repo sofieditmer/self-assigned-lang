@@ -13,6 +13,7 @@ The repository follows the overall structure presented below. The two scripts, `
 | ```src``` | A folder containing the python scripts for the particular assignment.
 | ```output``` | A folder containing the outputs produced when running the python scripts within the src folder.
 | ```utils``` | A folder containing utilty functions to be used in the main scripts.
+|```glove```| An empty folder in which the downloaded word embeddings are to be placed. See the "Usage and Technicalities" section for more details.
 | ```requirements.txt```| A file containing the dependencies necessary to run the python script.
 | ```create_venv.sh```| A bash-file that creates a virtual environment in which the necessary dependencies listed in the ```requirements.txt``` are installed. This script should be run from the command line.
 | ```LICENSE``` | A file declaring the license type of the repository.
@@ -24,7 +25,16 @@ To reproduce the results of this assignment, the user will have to create their 
 $ git clone https://github.com/sofieditmer/self-assigned-lang.git  
 ```
 
-Once the user has cloned the repository, a virtual environment must be set up in which the relevant dependencies can be installed. To set up the virtual environment and install the relevant dependencies, a bash-script is provided, which creates a virtual environment and installs the dependencies listed in the requirements.txt file when executed. To run the bash-script that sets up the virtual envi-ronment and installs the relevant dependencies, the user must first navigate to the topic modeling repository:
+Since the pretrained GloVe word embeddings are too large to upload to GitHub the user is asked to download these through the command line, move them to the glove folder provided in the repository and unzip the file. This is because the 1-cnn-moviegenre.py scripts expects the pretrained GloVe word embeddings to be placed in a folder called “glove”. 
+
+```
+$ cd self-assigned-lang                           # navigate to repository
+$ wget http://nlp.stanford.edu/data/glove.6B.zip  # download word embeddings
+$ mv glove.6b.zip glove                           # move embeddings to glove/ folder
+$ unzip glove.6B.zip                              # unzip the file
+```
+
+Once the user has cloned the repository and downloaded the pretrained word embeddings, a virtual environment must be set up in which the relevant dependencies can be installed. To set up the virtual environment and install the relevant dependencies, a bash-script is provided, which creates a virtual environment and installs the dependencies listed in the requirements.txt file when executed. To run the bash-script that sets up the virtual envi-ronment and installs the relevant dependencies, the user must first navigate to the topic modeling repository:
 
 ```
 $ cd self-assigned-lang
