@@ -1,1 +1,1 @@
-# In this folder you need to place the pretrained GloVe word embeddings. See README for more information on how to download these.
+## In this folder you need to place the pretrained GloVe word embeddings. See [README](https://github.com/sofieditmer/self-assigned-lang/blob/main/README.md) for more information on how to download these.
